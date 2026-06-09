@@ -23,11 +23,12 @@ public class CoinManager : MonoBehaviour
         availableCoins = FindObjectsByType<Coin>().ToList();
     }
 
-    public void AddPoint(Coin coin)
+    public void AddPoint(Coin coin, int coinValue)
     {
-        points++;
+        points += coinValue;
         availableCoins.Remove(coin);
-        if (IsOutOfCoins()) Debug.Log("Gate is open!");
+        UIManager.instance.UpdateCoinText(points);
+        if (IsOutOfCoins()) Debug.Log("Gate is open!"); 
     }
 
     public bool IsOutOfCoins()
