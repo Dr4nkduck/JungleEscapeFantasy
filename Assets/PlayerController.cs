@@ -12,7 +12,17 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 8f;
     public float jumpPower = 10f;
 
+    [SerializeField]
+    private int attackDamage = 25;
+
+    [SerializeField]
+    private float attackRange = 1.25f;
+
+    [SerializeField]
+    private float attackCooldown = 0.35f;
+
     Vector2 moveInput;
+    float nextAttackTime;
 
     public float CurrentMoveSpeed
     {
@@ -67,12 +77,25 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Collider2D bodyCollider;
     Animator animator;
+    PlayerHealth playerHealth;
+    PlayerHealthBar playerHealthBar;
     
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         bodyCollider = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
+        playerHealth = GetComponent<PlayerHealth>();
+        if (playerHealth == null)
+        {
+            playerHealth = gameObject.AddComponent<PlayerHealth>();
+        }
+
+        playerHealthBar = GetComponent<PlayerHealthBar>();
+        if (playerHealthBar == null)
+        {
+            playerHealthBar = gameObject.AddComponent<PlayerHealthBar>();
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -84,7 +107,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            TryAttack();
+        }
     }
 
     private void FixedUpdate()
@@ -131,5 +157,76 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
         }
+    }
+
+    private void TryAttack()
+    {
+        if (Time.time < nextAttackTime || playerHealth.IsDead)
+        {
+            return;
+        }
+
+        nextAttackTime = Time.time + attackCooldown;
+        GhostRider1 target = FindAttackTarget();
+        if (target != null)
+        {
+            target.TakeDamage(attackDamage);
+        }
+    }
+
+    private GhostRider1 FindAttackTarget()
+    {
+        Vector2 attackOrigin = (Vector2)transform.position + Vector2.right * (IsFacingRight ? attackRange * 0.5f : -attackRange * 0.5f);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackOrigin, attackRange);
+
+        foreach (Collider2D hit in hits)
+        {
+            GhostRider1 ghost = hit.GetComponent<GhostRider1>();
+            if (ghost == null)
+            {
+                ghost = hit.GetComponentInParent<GhostRider1>();
+            }
+
+            if (ghost != null)
+            {
+                return ghost;
+            }
+        }
+
+        GhostRider1[] ghosts = FindObjectsByType<GhostRider1>();
+        foreach (GhostRider1 ghost in ghosts)
+        {
+            if (CanHitGhost(ghost))
+            {
+                return ghost;
+            }
+        }
+
+        return null;
+    }
+
+    private bool CanHitGhost(GhostRider1 ghost)
+    {
+        if (ghost == null || ghost.IsDead)
+        {
+            return false;
+        }
+
+        Bounds playerBounds = bodyCollider.bounds;
+        Bounds ghostBounds = ghost.BodyBounds;
+        float direction = IsFacingRight ? 1f : -1f;
+        float horizontalDirection = Mathf.Sign(ghostBounds.center.x - playerBounds.center.x);
+
+        if (!Mathf.Approximately(horizontalDirection, 0f) && horizontalDirection != direction)
+        {
+            return false;
+        }
+
+        float ghostEdge = IsFacingRight ? ghostBounds.min.x : ghostBounds.max.x;
+        float horizontalDistance = Mathf.Abs(ghostEdge - playerBounds.center.x);
+        float allowedVerticalDistance = playerBounds.extents.y + ghostBounds.extents.y + 0.35f;
+        float verticalDistance = Mathf.Abs(ghostBounds.center.y - playerBounds.center.y);
+
+        return horizontalDistance <= attackRange && verticalDistance <= allowedVerticalDistance;
     }
 }
