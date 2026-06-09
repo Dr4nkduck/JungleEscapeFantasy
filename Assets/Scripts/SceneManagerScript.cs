@@ -15,7 +15,6 @@ public class SceneManagerScript : MonoBehaviour
     
     void Start()
     {
-        DontDestroyOnLoad(this);
     }
 
     public void LoadScene(string sceneName)
