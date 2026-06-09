@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collider2D))]
 
 public class PlayerController : MonoBehaviour
 {
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
+    public float jumpPower = 10f;
 
     Vector2 moveInput;
 
@@ -63,11 +65,13 @@ public class PlayerController : MonoBehaviour
 
 
     Rigidbody2D rb;
+    Collider2D bodyCollider;
     Animator animator;
     
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        bodyCollider = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
     }
 
@@ -104,7 +108,7 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
 
-        IsMoving = moveInput != Vector2.zero;
+        IsMoving = !Mathf.Approximately(moveInput.x, 0f);
 
         SetFacingDirection(moveInput);
     }
@@ -118,6 +122,14 @@ public class PlayerController : MonoBehaviour
         else if (context.canceled)
         {
             IsRunning = false;
+        }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.started && bodyCollider.IsTouchingLayers())
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpPower);
         }
     }
 }

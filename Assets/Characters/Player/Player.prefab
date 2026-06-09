@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   walkSpeed: 5
   runSpeed: 8
+  jumpPower: 10
   _isMoving: 0
   _isRunning: 1
   _isFacingRight: 1
@@ -245,6 +246,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 79925f2d-61f6-4141-bc18-86df746dd97c
     m_ActionName: 'Player/Run[/Keyboard/leftShift]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5789521367341721671}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 25cb2403-e1af-4f2f-a885-58fb4868f803
+    m_ActionName: 'Player/Jump[/Keyboard/w,/Keyboard/upArrow,/Keyboard/space]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
