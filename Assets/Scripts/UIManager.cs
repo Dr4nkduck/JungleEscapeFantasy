@@ -3,7 +3,9 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public TextMeshProUGUI coinText;
+    public GameObject LoseGameCanvas;
+    public GameObject WinGameCanvas;
+    public TextMeshProUGUI[] coinTexts;
 
     public static UIManager instance;
 
@@ -17,7 +19,16 @@ public class UIManager : MonoBehaviour
 
     public void UpdateCoinText(int points)
     {
-        coinText.text = points.ToString();
+        foreach(var i in coinTexts) i.text = points.ToString();
+    }
+
+    public void ToggleLoseGameCanvas(bool enabled)
+    {
+        LoseGameCanvas.SetActive(enabled);
+    }
+    public void ToggleWinGameCanvas(bool enabled)
+    {
+        WinGameCanvas.SetActive(enabled);
     }
 
 }

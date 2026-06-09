@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public Gate gate;
 
     void Awake()
     {
@@ -12,15 +13,18 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
     }
-
+    private void Start()
+    {
+        SetGateActive(false);
+    }
     public void LoseGame()
     {
-        Debug.Log("You lose!");
+        UIManager.instance.ToggleLoseGameCanvas(true);
     }
 
     public void WinGame()
     {
-        Debug.Log("You win!");
+        UIManager.instance.ToggleWinGameCanvas(true);
     }
     
     public void BackToMenu()
@@ -30,7 +34,12 @@ public class GameManager : MonoBehaviour
     
     public void RestartGame()
     {
-        SceneManagerScript.instance.LoadScene("Game");
+        SceneManagerScript.instance.LoadScene("GameplayScene");
+    }
+
+    public void SetGateActive(bool enabled)
+    {
+        gate.gameObject.SetActive(enabled);
     }
 
 }

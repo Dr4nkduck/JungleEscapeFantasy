@@ -28,7 +28,7 @@ public class CoinManager : MonoBehaviour
         points += coinValue;
         availableCoins.Remove(coin);
         UIManager.instance.UpdateCoinText(points);
-        if (IsOutOfCoins()) Debug.Log("Gate is open!"); 
+        if (IsOutOfCoins()) GameManager.instance.SetGateActive(true);
     }
 
     public bool IsOutOfCoins()
