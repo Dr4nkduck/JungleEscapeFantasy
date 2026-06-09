@@ -477,6 +477,8 @@ GameObject:
   - component: {fileID: 314143954}
   - component: {fileID: 314143955}
   - component: {fileID: 314143956}
+  - component: {fileID: 314143957}
+  - component: {fileID: 314143958}
   m_Layer: 0
   m_Name: GhostRider2
   m_TagString: Untagged
@@ -573,12 +575,45 @@ MonoBehaviour:
   speed: 2
   groundCheck: {fileID: 0}
   movingRight: 1
+  damage: 10
+  attackRange: 0.85
+  attackCooldown: 1
   rb: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 4294967295
   groundCheckDistance: 0.25
   wallCheckDistance: 0.15
+--- !u!114 &314143957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314143948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da97a0a43c2452aa52d582498325e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+--- !u!114 &314143958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314143948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5210d16ca1364f0e835d75425bd68b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 1.05, z: 0}
+  size: {x: 0.75, y: 0.08}
+  sortingOrder: 20
+  fillColor: {r: 0.95, g: 0.18, b: 0.08, a: 1}
 --- !u!61 &314143953
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5347,6 +5382,8 @@ GameObject:
   - component: {fileID: 1613926854}
   - component: {fileID: 1613926856}
   - component: {fileID: 1613926857}
+  - component: {fileID: 1613926858}
+  - component: {fileID: 1613926859}
   m_Layer: 0
   m_Name: GhostRider1
   m_TagString: Untagged
@@ -5516,12 +5553,45 @@ MonoBehaviour:
   speed: 2
   groundCheck: {fileID: 0}
   movingRight: 1
+  damage: 10
+  attackRange: 0.85
+  attackCooldown: 1
   rb: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 4294967295
   groundCheckDistance: 0.25
   wallCheckDistance: 0.15
+--- !u!114 &1613926858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613926851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da97a0a43c2452aa52d582498325e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+--- !u!114 &1613926859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613926851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5210d16ca1364f0e835d75425bd68b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 1.05, z: 0}
+  size: {x: 0.75, y: 0.08}
+  sortingOrder: 20
+  fillColor: {r: 0.95, g: 0.18, b: 0.08, a: 1}
 --- !u!95 &1613926857
 Animator:
   serializedVersion: 7

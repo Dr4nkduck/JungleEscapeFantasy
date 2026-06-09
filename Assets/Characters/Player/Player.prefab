@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 8874740823696675932}
   - component: {fileID: 7775822760256677362}
   - component: {fileID: 5789521367341721671}
+  - component: {fileID: 6843050270470263341}
+  - component: {fileID: 6843050270470263342}
   - component: {fileID: 507135913617289622}
   - component: {fileID: 1700369403471890376}
   - component: {fileID: 4740891381345143710}
@@ -138,9 +140,42 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 8
   jumpPower: 10
+  attackDamage: 25
+  attackRange: 1.25
+  attackCooldown: 0.35
   _isMoving: 0
   _isRunning: 1
   _isFacingRight: 1
+--- !u!114 &6843050270470263341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5167047602462189564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8da97a0a43c2452aa52d582498325e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+--- !u!114 &6843050270470263342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5167047602462189564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5210d16ca1364f0e835d75425bd68b26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 1.4, z: 0}
+  size: {x: 1.3, y: 0.14}
+  sortingOrder: 20
+  fillColor: {r: 0.12, g: 0.86, b: 0.22, a: 1}
 --- !u!114 &507135913617289622
 MonoBehaviour:
   m_ObjectHideFlags: 0
