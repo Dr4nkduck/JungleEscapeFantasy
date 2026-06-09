@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   audioClip: {fileID: 8300000, guid: 613ee9e1f2f273a42acf75b5ef2e8971, type: 3}
+  pointValue: 3
 --- !u!58 &3658447212352154853
 CircleCollider2D:
   m_ObjectHideFlags: 0
