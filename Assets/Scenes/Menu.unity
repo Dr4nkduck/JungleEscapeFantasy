@@ -2787,9 +2787,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'W A S D :   MOVE
+  m_text: 'W A  D :   MOVE
 
-    SPACE :  JUMP
+    SPACE :  ATTACK
 
 
 
