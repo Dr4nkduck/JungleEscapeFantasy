@@ -113,7 +113,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -139,13 +139,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   walkSpeed: 5
   runSpeed: 8
-  jumpPower: 10
+  jumpPower: 7
   attackDamage: 25
   attackRange: 1.25
   attackCooldown: 0.35
   _isMoving: 0
-  _isRunning: 1
-  _isFacingRight: 1
+  _isRunning: 0
+  _isFacingRight: 0
 --- !u!114 &6843050270470263341
 MonoBehaviour:
   m_ObjectHideFlags: 0

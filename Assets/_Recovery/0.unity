@@ -6708,8 +6708,8 @@ Transform:
   m_GameObject: {fileID: 1613926851}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.6776, y: -3.2929, z: 0}
-  m_LocalScale: {x: 1.9021784, y: 1.7533025, z: 1.0884}
+  m_LocalPosition: {x: 9.58, y: -3.24, z: 0}
+  m_LocalScale: {x: 2.1144712, y: 1.805481, z: 1.0884}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -6758,7 +6758,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.7, y: 1.5}
+  m_Size: {x: 0.92, y: 2.03}
   m_EdgeRadius: 0
 --- !u!50 &1613926855
 Rigidbody2D:
@@ -9432,10 +9432,6 @@ PrefabInstance:
       propertyPath: walkSpeed
       value: 300
       objectReference: {fileID: 0}
-    - target: {fileID: 5789521367341721671, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
-      propertyPath: _isRunning
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5867452849589374847, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.31
@@ -9479,6 +9475,10 @@ PrefabInstance:
     - target: {fileID: 7775822760256677362, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
       propertyPath: m_Constraints
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775822760256677362, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
+      propertyPath: m_GravityScale
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
