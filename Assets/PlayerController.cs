@@ -62,13 +62,16 @@ public class PlayerController : MonoBehaviour
 
 
     public bool _isFacingRight = true;
-    public bool IsFacingRight { get { return _isFacingRight; } private set
+    public bool IsFacingRight
+    {
+        get { return _isFacingRight; }
+        private set
         {
             if (_isFacingRight != value)
             {
-                transform.localScale *= new Vector2(-1, 1);
+                _isFacingRight = value;
+                GetComponent<SpriteRenderer>().flipX = !value;
             }
-            _isFacingRight = value;
         }
     }
 
