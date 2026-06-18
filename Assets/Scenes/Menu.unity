@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RICE SHIRT RICE MONEY
+  m_text: Jungle Escape Fantasy
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b92706d1655a71544bb455d287dfed35, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: b92706d1655a71544bb455d287dfed35, type: 2}
