@@ -1,59 +1,45 @@
 ﻿using UnityEngine;
-using TMPro; // Khai báo thư viện để sử dụng TextMeshPro (hiển thị chữ sắc nét trong Unity)
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    // --- CÁC BIẾN CẤU HÌNH (Giao diện hiển thị) ---
-    [Header("UI Canvases")]
-    public GameObject LoseGameCanvas; // Giao diện màn hình khi Thua (Lose)
-    public GameObject WinGameCanvas;  // Giao diện màn hình khi Thắng (Win)
+    // Canvas hiển thị khi người chơi thua
+    public GameObject LoseGameCanvas;
 
-    [Header("UI Texts")]
-    public TextMeshProUGUI[] coinTexts; // Mảng chứa các đối tượng Text hiển thị số điểm/số xu thu thập được
+    // Canvas hiển thị khi người chơi thắng
+    public GameObject WinGameCanvas;
 
-    // --- THIẾT LẬP SINGLETON PATTERN ---
-    // Biến static giúp các script khác dễ dàng gọi hàm từ UIManager mà không cần kéo thả reference
+    // Mảng Text hiển thị số coin trên các màn hình UI
+    public TextMeshProUGUI[] coinTexts;
+
+    // Singleton để các script khác có thể truy cập UIManager
     public static UIManager instance;
 
     void Awake()
     {
-        // Khởi tạo Singleton: Đảm bảo chỉ có duy nhất một UIManager tồn tại trong Scene
+        // Đảm bảo chỉ có một instance của UIManager
         if (instance == null)
         {
-            instance = this; // Gán instance bằng chính script này
+            instance = this;
         }
     }
 
-    // --- CÁC HÀM CHỨC NĂNG CHÍNH ---
-
-    /// <summary>
-    /// Cập nhật số lượng xu lên toàn bộ các text hiển thị điểm trên màn hình.
-    /// </summary>
-    /// <param name="points">Số điểm/Số xu hiện tại</param>
+    // Cập nhật số coin trên tất cả các Text trong mảng coinTexts
     public void UpdateCoinText(int points)
     {
-        // Duyệt qua từng ô Text có trong mảng coinTexts và cập nhật lại chuỗi ký tự bằng số điểm mới
         foreach (var i in coinTexts)
-        {
-            i.text = points.ToString(); // Chuyển kiểu số (int) thành kiểu chữ (string) để hiển thị
-        }
+            i.text = points.ToString();
     }
 
-    /// <summary>
-    /// Bật hoặc tắt màn hình Thua Game.
-    /// </summary>
-    /// <param name="enabled">true để bật, false để tắt</param>
+    // Bật hoặc tắt màn hình thua game
     public void ToggleLoseGameCanvas(bool enabled)
     {
-        LoseGameCanvas.SetActive(enabled); // Kích hoạt hoặc hủy kích hoạt GameObject LoseGameCanvas
+        LoseGameCanvas.SetActive(enabled);
     }
 
-    /// <summary>
-    /// Bật hoặc tắt màn hình Thắng Game.
-    /// </summary>
-    /// <param name="enabled">true để bật, false để tắt</param>
+    // Bật hoặc tắt màn hình thắng game
     public void ToggleWinGameCanvas(bool enabled)
     {
-        WinGameCanvas.SetActive(enabled); // Kích hoạt hoặc hủy kích hoạt GameObject WinGameCanvas
+        WinGameCanvas.SetActive(enabled);
     }
 }
