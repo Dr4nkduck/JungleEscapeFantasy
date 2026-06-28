@@ -12,7 +12,7 @@ public class GhostRider1 : MonoBehaviour
     private int damage = 10;
 
     [SerializeField]
-    private float attackRange = 0.85f;
+    private float attackRange = 2.0f;
 
     [SerializeField]
     private float attackCooldown = 1f;
@@ -36,6 +36,7 @@ public class GhostRider1 : MonoBehaviour
     private Transform player;
     private float nextAttackTime;
     private bool isDying;
+    private Animator animator;
 
     public bool IsDead => health != null && health.IsDead;
     public Bounds BodyBounds => bodyCollider.bounds;
@@ -44,6 +45,7 @@ public class GhostRider1 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         bodyCollider = GetComponent<Collider2D>();
+        animator = GetComponent<Animator>();
         health = GetComponent<PlayerHealth>();
         if (health == null)
         {
@@ -90,7 +92,95 @@ public class GhostRider1 : MonoBehaviour
 
     private void Update()
     {
-        TryDamagePlayer();
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (health.IsDead || Time.time < nextAttackTime) return;
+
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.name == "Player")
+        {
+            PlayerHealth targetHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if (targetHealth != null && !targetHealth.IsDead)
+            {
+                nextAttackTime = Time.time + attackCooldown;
+                targetHealth.TakeDamage(damage);
+                StartCoroutine(PlayAttackEffect());
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collider)
+    {
+        if (health.IsDead || Time.time < nextAttackTime) return;
+
+        if (collider.gameObject.CompareTag("Player") || collider.gameObject.name == "Player")
+        {
+            PlayerHealth targetHealth = collider.gameObject.GetComponent<PlayerHealth>();
+            if (targetHealth != null && !targetHealth.IsDead)
+            {
+                nextAttackTime = Time.time + attackCooldown;
+                targetHealth.TakeDamage(damage);
+                StartCoroutine(PlayAttackEffect());
+            }
+        }
+    }
+
+    private System.Collections.IEnumerator PlayAttackEffect()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("attack");
+        }
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        if (sr == null) yield break;
+
+        Vector3 originalScale = transform.localScale;
+        Color originalColor = sr.color;
+        Quaternion originalRotation = transform.localRotation;
+
+        float attackDir = movingRight ? 1f : -1f;
+        if (player != null)
+        {
+            attackDir = Mathf.Sign(player.position.x - transform.position.x);
+        }
+
+        // Phase 1: Strike (Stretch forward, tilt, flash bright red)
+        float strikeDuration = 0.08f;
+        float elapsed = 0f;
+        while (elapsed < strikeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / strikeDuration;
+            
+            transform.localScale = new Vector3(originalScale.x * (1f + 0.4f * t), originalScale.y * (1f - 0.15f * t), originalScale.z);
+            transform.localRotation = Quaternion.Euler(0, 0, -20f * Mathf.Sign(originalScale.x) * attackDir * t);
+            sr.color = Color.Lerp(originalColor, Color.red, t);
+            
+            yield return null;
+        }
+
+        // Phase 2: Recover (Elastic snap back)
+        float recoverDuration = 0.25f;
+        elapsed = 0f;
+        while (elapsed < recoverDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / recoverDuration;
+            float elastic = 1f - t;
+            
+            transform.localScale = new Vector3(originalScale.x * (1f + 0.4f * elastic), originalScale.y * (1f - 0.15f * elastic), originalScale.z);
+            transform.localRotation = Quaternion.Euler(0, 0, -20f * Mathf.Sign(originalScale.x) * attackDir * elastic);
+            sr.color = Color.Lerp(Color.red, originalColor, t);
+            
+            yield return null;
+        }
+
+        // Ensure everything is reset completely
+        transform.localScale = originalScale;
+        transform.localRotation = originalRotation;
+        sr.color = originalColor;
     }
 
     private void FixedUpdate()
@@ -162,22 +252,7 @@ public class GhostRider1 : MonoBehaviour
         }
     }
 
-    private void TryDamagePlayer()
-    {
-        if (health.IsDead || player == null || playerHealth == null || playerHealth.IsDead || Time.time < nextAttackTime)
-        {
-            return;
-        }
 
-        float distance = Vector2.Distance(transform.position, player.position);
-        if (distance > attackRange)
-        {
-            return;
-        }
-
-        nextAttackTime = Time.time + attackCooldown;
-        playerHealth.TakeDamage(damage);
-    }
 
     private void Die()
     {

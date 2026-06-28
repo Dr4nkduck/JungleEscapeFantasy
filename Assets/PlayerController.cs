@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float attackCooldown = 0.35f;
 
+    [SerializeField]
+    private float fallThreshold = -10f;
+
     Vector2 moveInput;
     float nextAttackTime;
 
@@ -109,7 +112,26 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        if (playerHealth != null)
+        {
+            playerHealth.HealthDepleted += OnPlayerDeath;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (playerHealth != null)
+        {
+            playerHealth.HealthDepleted -= OnPlayerDeath;
+        }
+    }
+
+    private void OnPlayerDeath()
+    {
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.LoseGame();
+        }
     }
 
     // Update is called once per frame
@@ -118,6 +140,11 @@ public class PlayerController : MonoBehaviour
         if (Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             TryAttack();
+        }
+
+        if (transform.position.y < fallThreshold && playerHealth != null && !playerHealth.IsDead)
+        {
+            playerHealth.SetHealth(0);
         }
     }
 
