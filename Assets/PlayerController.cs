@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInput;
     float nextAttackTime;
 
+
+    //Check if the player is moving and return the current move speed based on whether they are running or walking
     public float CurrentMoveSpeed
     {
         get
@@ -65,6 +67,8 @@ public class PlayerController : MonoBehaviour
 
 
     public bool _isFacingRight = true;
+
+    // Check if the player is facing right and flip the sprite if they are not
     public bool IsFacingRight
     {
         get { return _isFacingRight; }
@@ -85,7 +89,8 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     PlayerHealth playerHealth;
     PlayerHealthBar playerHealthBar;
-    
+
+    // Awake is called when the script instance is being loaded
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -143,11 +148,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+
+    // FixedUpdate is called every fixed framerate frame
     private void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed * Time.fixedDeltaTime, rb.linearVelocity.y);
     }
 
+
+    // Set the facing direction of the player based on the move input
     private void SetFacingDirection(Vector2 moveInput)
     {
         if (moveInput.x > 0 && !IsFacingRight)
@@ -160,6 +169,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Input System Callbacks-Move
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -169,6 +179,7 @@ public class PlayerController : MonoBehaviour
         SetFacingDirection(moveInput);
     }
 
+    // Input System Callbacks-Run
     public void OnRun(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -180,7 +191,7 @@ public class PlayerController : MonoBehaviour
             IsRunning = false;
         }
     }
-
+    // Input System Callbacks-Jump
     public void OnJump(InputAction.CallbackContext context)
     {
         if (context.started && bodyCollider.IsTouchingLayers())
