@@ -15,6 +15,8 @@ public class PlayerHealth : MonoBehaviour
     public bool IsDead => currentHealth <= 0;
 
     public event Action<int, int> HealthChanged;
+    public event Action DamageTaken;
+    public event Action<Vector3?> DamageTakenDirection;
     public event Action HealthDepleted;
 
     private void Awake()
@@ -36,11 +38,19 @@ public class PlayerHealth : MonoBehaviour
         HealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, Vector3? playerDirection = null)
     {
         if (amount <= 0 || IsDead)
         {
             return;
+        }
+        if(playerDirection == null)
+        {
+            DamageTaken?.Invoke();
+        }
+        else
+        {
+            DamageTakenDirection?.Invoke(playerDirection);
         }
 
         SetHealth(currentHealth - amount);

@@ -1035,7 +1035,7 @@ GameObject:
   - component: {fileID: 378978681}
   - component: {fileID: 378978680}
   - component: {fileID: 378978679}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9542,15 +9542,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5789521367341721671, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
       propertyPath: runSpeed
-      value: 600
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5789521367341721671, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
       propertyPath: walkSpeed
-      value: 300
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5789521367341721671, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
       propertyPath: _isRunning
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5789521367341721671, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5867452849589374847, guid: e837ab8b866773346896230ea5e3f7f3, type: 3}
       propertyPath: m_LocalScale.x

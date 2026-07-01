@@ -1,10 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     // Singleton để các script khác truy cập GameManager
     public static GameManager instance;
+    public Checkpoint checkpoint = null;
 
     // Tham chiếu đến Gate trong scene
     public Gate gate;
@@ -45,7 +47,29 @@ public class GameManager : MonoBehaviour
     // Chơi lại màn hiện tại
     public void RestartGame()
     {
-        SceneManagerScript.instance.LoadScene("GameplayScene");
+        if (checkpoint == null)
+        {
+            SceneManagerScript.instance.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        else
+        {
+            PlayerController player = FindAnyObjectByType<PlayerController>();
+
+            if (player != null)
+            {
+                player.Respawn(checkpoint.playerPos, checkpoint.playerHealth);
+            }
+
+            if (UIManager.instance != null)
+            {
+                UIManager.instance.ToggleLoseGameCanvas(false);
+            }
+        }
+    }
+
+    public void SetCheckPoint(Checkpoint checkpoint)
+    {
+        this.checkpoint = checkpoint;
     }
 
     // Bật hoặc tắt Gate

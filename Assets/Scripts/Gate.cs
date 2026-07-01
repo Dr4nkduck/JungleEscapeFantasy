@@ -12,9 +12,10 @@ public class Gate : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Nếu đây là cổng thắng game
-        if (isWin)
+        if (isWin && other.tag == "Player")
         {
             // Gọi hàm thắng game trong GameManager
+            other.GetComponent<PlayerController>().MoveAble = false;
             GameManager.instance.WinGame();
         }
         else
