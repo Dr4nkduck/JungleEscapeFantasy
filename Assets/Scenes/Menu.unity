@@ -2650,7 +2650,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HELP
+  m_text: TUTORIAL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b92706d1655a71544bb455d287dfed35, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: b92706d1655a71544bb455d287dfed35, type: 2}
@@ -2787,14 +2787,31 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'W A  D :   MOVE
-
-    SPACE :  ATTACK
+  m_text: 'KEYBOARD:
 
 
+    A D: MOVE LEFT AND RIGHT
 
-    OBJECTIVE:  COLLECT ALL COIN
-    TO COMPLETE LEVEL'
+
+    SPACE OR W :  JUMP
+
+
+    SPAMMING
+    SPACE OR W : CLIMB
+
+
+    SHIFT: SPRINT(RUN)
+
+
+    MOUSE:
+
+
+    LEFT CLICK: ATTACK
+
+
+
+    OBJECTIVE: 
+    COLLECT ALL COIN , FIGHT MONSTER, EVADE TRAPS AND GO TO GATE TO COMPLETE LEVEL'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b92706d1655a71544bb455d287dfed35, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: b92706d1655a71544bb455d287dfed35, type: 2}
@@ -2821,8 +2838,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 77.1
-  m_fontSizeBase: 77.1
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

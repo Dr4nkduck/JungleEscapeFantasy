@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq; // Thư viện hỗ trợ các thao tác xử lý danh sách nhanh (như .ToList())
 using UnityEngine;
@@ -29,6 +29,9 @@ public class CoinManager : MonoBehaviour
         // Tự động tìm kiếm TẤT CẢ các đối tượng có gắn script "Coin" đang có trên bản đồ 
         // và chuyển chúng thành một danh sách (List) để tiện quản lý.
         availableCoins = FindObjectsByType<Coin>().ToList();
+
+        // Cập nhật hiển thị High Score khi bắt đầu game
+        UpdateHighScoreDisplay();
     }
 
     /// <summary>
@@ -45,9 +48,59 @@ public class CoinManager : MonoBehaviour
         // Gọi UIManager để cập nhật và hiển thị số điểm mới lên màn hình UI cho người chơi thấy
         UIManager.instance.UpdateCoinText(points);
 
+        // Lưu và cập nhật High Score thời gian thực nếu vượt qua High Score cũ
+        CheckAndUpdateHighScore();
+
         // Kiểm tra xem đã ăn hết sạch xu trên bản đồ chưa. 
         // Nếu đã hết xu (IsOutOfCoins trả về true), gọi GameManager để kích hoạt cổng dịch chuyển/cổng về đích.
         if (IsOutOfCoins()) GameManager.instance.SetGateActive(true);
+    }
+
+    /// <summary>
+    /// Lấy High Score hiện tại của màn chơi từ PlayerPrefs
+    /// </summary>
+    public int GetHighScore()
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        return PlayerPrefs.GetInt("HighScore_" + sceneName, 0);
+    }
+
+    /// <summary>
+    /// Lưu High Score mới của màn chơi vào PlayerPrefs
+    /// </summary>
+    public void SaveHighScore(int score)
+    {
+        string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+        string key = "HighScore_" + sceneName;
+        if (score > PlayerPrefs.GetInt(key, 0))
+        {
+            PlayerPrefs.SetInt(key, score);
+            PlayerPrefs.Save();
+        }
+    }
+
+    /// <summary>
+    /// Cập nhật hiển thị High Score lên UI
+    /// </summary>
+    private void UpdateHighScoreDisplay()
+    {
+        if (UIManager.instance != null)
+        {
+            UIManager.instance.UpdateHighScoreText(GetHighScore());
+        }
+    }
+
+    /// <summary>
+    /// Kiểm tra và cập nhật High Score nếu điểm hiện tại cao hơn
+    /// </summary>
+    private void CheckAndUpdateHighScore()
+    {
+        int currentHighScore = GetHighScore();
+        if (points > currentHighScore)
+        {
+            SaveHighScore(points);
+            UpdateHighScoreDisplay();
+        }
     }
 
     /// <summary>

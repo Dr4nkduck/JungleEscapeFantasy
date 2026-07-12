@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
 
     // Mảng Text hiển thị số coin trên các màn hình UI
     public TextMeshProUGUI[] coinTexts;
+
+    // Mảng Text hiển thị số high score trên các màn hình UI
+    public TextMeshProUGUI[] highScoreTexts;
 
     // Singleton để các script khác có thể truy cập UIManager
     public static UIManager instance;
@@ -29,6 +32,38 @@ public class UIManager : MonoBehaviour
     {
         foreach (var i in coinTexts)
             i.text = points.ToString();
+    }
+
+    // Cập nhật số high score trên tất cả các Text trong mảng highScoreTexts
+    public void UpdateHighScoreText(int highScore)
+    {
+        if (highScoreTexts == null || highScoreTexts.Length == 0)
+        {
+            FindHighScoreTexts();
+        }
+
+        if (highScoreTexts == null)
+        {
+            return;
+        }
+
+        UpdateAllHighScoreTexts(highScore);
+    }
+
+    private void UpdateAllHighScoreTexts(int highScore)
+    {
+        foreach (var t in highScoreTexts)
+        {
+            if (t == null) continue;
+            t.text = highScore.ToString();
+        }
+    }
+
+    private void FindHighScoreTexts()
+    {
+        var allTexts = FindObjectsByType<TextMeshProUGUI>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        
+        highScoreTexts = System.Array.FindAll(allTexts, t => t.gameObject.name.ToLower().Contains("highscore"));
     }
 
     // Bật hoặc tắt màn hình thua game
